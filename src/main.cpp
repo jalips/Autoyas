@@ -5,6 +5,10 @@
 #include "conf/coreManager.cpp"
 
 #include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+
+#include "wifi_mode.cpp"
+#include "station_mode.cpp"
 
 const char* ssid = "INTERNET";
 const char* password = "internet";
@@ -13,9 +17,34 @@ int ledPin = D5;
 WiFiServer server(80);
 
 void setup() {
-  Serial.begin(115200);
-  delay(10);
 
+  //  ********************************************   Station mode
+
+  pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
+  Serial.begin(115200);
+
+  uint32_t realSize = ESP.getFlashChipRealSize();
+  uint32_t ideSize = ESP.getFlashChipSize();
+  FlashMode_t ideMode = ESP.getFlashChipMode();
+
+  Serial.printf("Flash real id:   %08X\n", ESP.getFlashChipId());
+  Serial.printf("Flash real size: %u\n\n", realSize);
+
+  Serial.printf("Flash ide  size: %u\n", ideSize);
+  Serial.printf("Flash ide speed: %u\n", ESP.getFlashChipSpeed());
+  Serial.printf("Flash ide mode:  %s\n", (ideMode == FM_QIO ? "QIO" : ideMode == FM_QOUT ? "QOUT" : ideMode == FM_DIO ? "DIO" : ideMode == FM_DOUT ? "DOUT" : "UNKNOWN"));
+
+  if (ideSize != realSize) {
+    Serial.println("Flash Chip configuration wrong!\n");
+  } else {
+    Serial.println("Flash Chip configuration ok.\n");
+  }
+
+  // Set WiFi to station mode and disconnect from an AP if it was previously connected
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+
+  // **********************************************   Wifi Mode
 
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
@@ -44,62 +73,8 @@ void setup() {
   Serial.print("http://");
   Serial.print(WiFi.localIP());
   Serial.println("/");
-
 }
 
 void loop() {
-  // Check if a client has connected
-  WiFiClient client = server.available();
-  if (!client) {
-    return;
-  }
-
-  // Wait until the client sends some data
-  Serial.println("new client");
-  while(!client.available()){
-    delay(1);
-  }
-
-  // Read the first line of the request
-  String request = client.readStringUntil('\r');
-  Serial.println(request);
-  client.flush();
-
-  // Match the request
-
-  int value = LOW;
-  if (request.indexOf("/LED=ON") != -1) {
-    digitalWrite(ledPin, HIGH);
-    value = HIGH;
-  }
-  if (request.indexOf("/LED=OFF") != -1){
-    digitalWrite(ledPin, LOW);
-    value = LOW;
-  }
-
-
-
-  // Return the response
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  do not forget this one
-  client.println("<!DOCTYPE HTML>");
-  client.println("<html>");
-
-  client.print("Led pin is now: ");
-
-  if(value == HIGH) {
-    client.print("On");
-  } else {
-    client.print("Off");
-  }
-  client.println("<br><br>");
-  client.println("Click <a href=\"/LED=ON\">here</a> turn the LED on pin 5 ON<br>");
-  client.println("Click <a href=\"/LED=OFF\">here</a> turn the LED on pin 5 OFF<br>");
-  client.println("</html>");
-
-  delay(1);
-  Serial.println("Client disconnected");
-  Serial.println("");
-
+  wifi(ledPin, server);
 }

@@ -1,25 +1,17 @@
 /**
  * Main program with setup and loop
  */
-#include "conf/libManager.cpp"
-#include "conf/coreManager.cpp"
+//#include "conf/libManager.cpp"
+//#include "conf/coreManager.cpp"
 
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-
-#include "wifi_mode.cpp"
-#include "station_mode.cpp"
-
-const char* ssid = "INTERNET";
-const char* password = "internet";
-
-int ledPin = D5;
-WiFiServer server(80);
+//int ledPin = D5;
+//WiFiServer server(80);
 
 void setup() {
+  Serial.begin(9600);
 
   //  ********************************************   Station mode
-
+  /*
   pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
   Serial.begin(115200);
 
@@ -73,8 +65,11 @@ void setup() {
   Serial.print("http://");
   Serial.print(WiFi.localIP());
   Serial.println("/");
+  */
 }
 
 void loop() {
-  wifi(ledPin, server);
+  Serial.println("Hello World.");
+  delay(2000);
+  //wifi(ledPin, server);
 }

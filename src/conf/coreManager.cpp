@@ -1,2 +1,0 @@
-
-#include "../banner/trollFace.cpp"

@@ -4,17 +4,17 @@
 
 #include "Arduino.h"
 
-#include "banner/trollFace.h"
-//#include "conf/libManager.h"
+#include "conf/libManager.h"
 //#include "conf/coreManager.cpp"
 
 void setup()
 {
   Serial.begin(115200);
-  trollFace();
+  displayBanner();
 }
 
 void loop()
 {
-
+  Serial.println("Hello world");
+  delay(2000);
 }

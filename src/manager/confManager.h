@@ -3,6 +3,12 @@
 ***********************************************************************/
 
 /**
+ * CONF for ESP8266 Board
+ */
+int baudSpeed = 115200;
+
+
+/**
  * CONF FOR TEMP & HYDRO
  */
 #include "DHT.h"

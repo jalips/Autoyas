@@ -2,6 +2,8 @@
 * Lib manager to load all files & function
 ***********************************************************************/
 
-#include "../banner/bannerManager.h"
+#include "../core/banner/bannerManager.h"
 
-#include "../sensor/tempHydro.h"
+#include "../core/sensor/tempHydro.h"
+
+#include "../core/storage/local.h"

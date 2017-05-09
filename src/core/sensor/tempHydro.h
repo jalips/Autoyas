@@ -1,6 +1,6 @@
 /************************************************************************
- * Functions for temperature and hydrometrie
- ***********************************************************************/
+* Functions for temperature and hydrometrie
+***********************************************************************/
 
 void initSetupTemp(){
   Serial.println("DHTxx test!");

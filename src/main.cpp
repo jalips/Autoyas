@@ -10,6 +10,10 @@
 #include "ap_mode.h"
 
 void setup() {
+
+  //  ********************************************   Station mode
+
+  pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
   Serial.begin(115200);
   delay(5000);
 

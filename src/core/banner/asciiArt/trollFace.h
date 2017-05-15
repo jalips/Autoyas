@@ -1,7 +1,7 @@
-/*********************
-Display Banner
-**********************/
-/*
+/************************************************************************
+* Banner troll face
+*********************************************************************/
+
 void trollFace(){
     Serial.println("                                       .....'',;;::cccllllllllllllcccc:::;;,,,''...'',,'..");
     Serial.println("                            ..';cldkO00KXNNNNXXXKK000OOkkkkkxxxxxddoooddddddxxxxkkkkOO0XXKx:.");
@@ -50,4 +50,3 @@ void trollFace(){
     Serial.println("              .,coxO0KXXXXXXXKK0OOxdoc:,..");
     Serial.println("                        ...");
 }
-*/

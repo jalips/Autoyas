@@ -1,4 +1,5 @@
-#include "conf/station_conf.h"
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
 
 void init_station_mode_setup() {
   pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output

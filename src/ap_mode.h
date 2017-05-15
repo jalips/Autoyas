@@ -1,7 +1,8 @@
 /**
  * Main program with setup and loop
  */
-#include "conf/ap_conf.h"
+
+#include <ESP8266WiFi.h>
 #include "html/html.h"
 
 const char* ssid = "";

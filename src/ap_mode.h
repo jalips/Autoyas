@@ -242,7 +242,7 @@ int modeAP(){
                     html_ssid = text_ssid;
                     html_password = text_get;
 
-                    writeFile(html_ssid, html_password);
+                    // writeFile(html_ssid, html_password);
 
                     // close the connection & Yellow led stop:
                     digitalWrite(ledPin, LOW);

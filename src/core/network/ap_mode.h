@@ -1,6 +1,6 @@
-/**
- * Main program with setup and loop
- */
+/************************************************************************
+* Wifi in AP Mode to connect to a wired network
+***********************************************************************/
 
 #include <ESP8266WiFi.h>
 #include "html/html.h"

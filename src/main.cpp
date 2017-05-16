@@ -1,16 +1,14 @@
 /************************************************************************
 * Main program with setup and loop
 ***********************************************************************/
-/**
- * Main program with setup and loop
- */
+
 #include "Arduino.h"
 #include "manager/libManager.h"
 
+int baudSpeed = 115200;
+
 void setup()
 {
-  int baudSpeed = 115200;
-
   // Setup baud speed
   Serial.begin(baudSpeed);
   // Wait for serial port to connect.

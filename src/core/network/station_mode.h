@@ -1,3 +1,7 @@
+/************************************************************************
+* Wifi in Station Mode that has the capability to use the 802.11 protocol
+***********************************************************************/
+
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 

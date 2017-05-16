@@ -8,11 +8,10 @@
 
 // Config for webserver port
 WiFiServer server(80);
-//ESP8266WebServer server(80);
 
 // Config for connect to wifi AP
 const char* ssid = "MyWemosWifiAP";
-const char* password = "link";
+const char* password = "password";
 
 IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 1); // set gateway to match your network
@@ -23,92 +22,73 @@ IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 //int ledPin = D5;
 //int firstLaunch = 1;
 
+String prepareHtmlPage()
+{
+  String htmlPage =
+     String("HTTP/1.1 200 OK\r\n") +
+            "Content-Type: text/html\r\n" +
+            "Connection: close\r\n" +  // the connection will be closed after completion of the response
+            "Refresh: 5\r\n" +  // refresh the page automatically every 5 sec
+            "\r\n" +
+            "<!DOCTYPE HTML>" +
+            "<html>" +
+            "Analog input:  " + String(analogRead(A0)) +
+            "</html>" +
+            "\r\n";
+  return htmlPage;
+}
+
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
-
+    // Doing some config for static IP
     Serial.print("Setting soft-AP configuration ... ");
     Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
-
+    // And start wifi with ssid and password set
     Serial.print("Setting soft-AP ... ");
-    Serial.println(WiFi.softAP("MyWemosWifiAP", "password") ? "Ready" : "Failed!");
-
+    Serial.println(WiFi.softAP(ssid, password) ? "Ready" : "Failed!");
+    // Print it IP Adress
     Serial.print("Soft-AP IP address = ");
     Serial.println(WiFi.softAPIP());
 
-    /* VERSION TEST 2
-    Serial.print("Setting soft-AP configuration ... ");
-    Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
-
-    Serial.print("Setting soft-AP ... ");
-    Serial.println(WiFi.softAP("ESPsoftAP_01") ? "Ready" : "Failed!");
-
-    Serial.print("Soft-AP IP address = ");
-    Serial.println(WiFi.softAPIP());
-    */
-
-    /* VERSION TEST
-    Serial.print(F("Setting static ip to : "));
-    Serial.println(ip);
-
-    // Connect to WiFi network
-    Serial.println();
-    Serial.print("Connecting to ");
-    Serial.println(ssid);
-    WiFi.config(ip, gateway, subnet);
-    WiFi.begin(ssid, password);
-
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      Serial.print(".");
-    }
-    Serial.println("");
-    Serial.println("WiFi connected");
-
-    // Start the server
-    server.begin();
-    Serial.println("Server started");
-
-    // Print the IP address
-    Serial.print("Use this URL : ");
-    Serial.print("http://");
-    Serial.print(WiFi.localIP());
-    Serial.println("/");
-    */
-
-
-    // VERSION MANON
-    // Start WiFi and create a network with ssid as the network name
-    // with password as the password.
-    /*
-    Serial.print("Starting AP...");
-    WiFi.begin(ssid, password);
-
-    // Print dots while we wait for the AP config to complete
-    while (WiFi.localIP() == INADDR_NONE){
-        Serial.print('.');
-        delay(300);
-    }
-    Serial.println("DONE");
-
-    Serial.print("LAN name = ");
-    Serial.println(ssid);
-    Serial.print("WPA password = ");
-    Serial.println(password);
-
-    IPAddress ip = WiFi.localIP();
-    Serial.print("Webserver IP address = ");
-    Serial.println(ip);
 
     // Start the web server on port 80
+    Serial.print("Webserver IP address = " + local_IP);
     Serial.print("Web-server port = ");
     server.begin();
     Serial.println("80");
     Serial.println();
-    */
+
 }
 
 void loopWifiAP(){
   Serial.printf("Stations connected = %d\n", WiFi.softAPgetStationNum());
+
+  WiFiClient client = server.available();
+  // wait for a client (web browser) to connect
+  if (client)
+  {
+    Serial.println("\n[Client connected]");
+    while (client.connected())
+    {
+      // read line by line what the client (web browser) is requesting
+      if (client.available())
+      {
+        String line = client.readStringUntil('\r');
+        Serial.print(line);
+        // wait for end of client's request, that is marked with an empty line
+        if (line.length() == 1 && line[0] == '\n')
+        {
+          client.println(prepareHtmlPage());
+          break;
+        }
+      }
+    }
+    delay(1); // give the web browser time to receive the data
+
+    // close the connection:
+    client.stop();
+    Serial.println("[Client disonnected]");
+  }
 
   /*
   // Check if a client has connected
@@ -233,146 +213,6 @@ void setApMode() {
                     // TODO : Function missing
                     //writeconf(text);
                     //restart();
-                }
-            }
-        }
-
-        // close the connection:
-        myClient.stop();
-        Serial.println(". Client disconnected from server");
-        Serial.println();
-    }
-}
-*/
-
-
-/*********************
-Init wifi in AP Mode
-**********************/
-/*
-void initWifi(){
-    Serial.println("*** LaunchPad CC3200 WiFi Web-Server in AP Mode");
-
-    // Start WiFi and create a network with ssid as the network name
-    // with password as the password.
-    Serial.print("Starting AP... ");
-    WiFi.begin(ssid, password);
-    while (WiFi.localIP() == INADDR_NONE)
-    {
-        // print dots while we wait for the AP config to complete
-        Serial.print('.');
-        delay(300);
-    }
-    Serial.println("DONE");
-
-    Serial.print("LAN name = ");
-    Serial.println(ssid);
-    Serial.print("WPA password = ");
-    Serial.println(password);
-
-    IPAddress ip = WiFi.localIP();
-    Serial.print("Webserver IP address = ");
-    Serial.println(ip);
-
-    Serial.print("Web-server port = ");
-    server.begin();                           // start the web server on port 80
-    Serial.println("80");
-    Serial.println();
-}
-*/
-
-/*********************
-Wifi running in AP Mode
-**********************/
-/*
-int modeAP(){
-    // Start Led
-    digitalWrite(ledPin, HIGH);
-
-    // Init wifi if it's the firstLaunch for conf
-    if(firstLaunch){
-        firstLaunch = 0;
-        // Init WiFi
-        initWifi();
-    }
-
-    WiFiClient myClient = server.available();
-
-    if (myClient)
-    {                             // if you get a client,
-        Serial.println(". Client connected to server");           // print a message out the serial port
-        char buffer[150] = {0};                 // make a buffer to hold incoming data
-        int8_t i = 0;
-        while (myClient.connected())
-        {            // loop while the client's connected
-            if (myClient.available())
-            {             // if there's bytes to read from the client,
-                char c = myClient.read();             // read a byte, then
-                Serial.write(c);                    // print it out the serial monitor
-                if (c == '\n') {                    // if the byte is a newline character
-
-                    // if the current line is blank, you got two newline characters in a row.
-                    // that's the end of the client HTTP request, so send a response:
-                    if (strlen(buffer) == 0)
-                    {
-                        // Display Html Form with println
-                        displayHtmlForm(myClient);
-
-                        // The HTTP response ends with another blank line:
-                        myClient.println();
-                        // break out of the while loop:
-                        break;
-                    }
-                    else
-                    {      // if you got a newline, then clear the buffer:
-                        memset(buffer, 0, 150);
-                        i = 0;
-                    }
-                }
-                else if (c != '\r')
-                {    // if you got anything else but a carriage return character,
-                    buffer[i++] = c;      // add it to the end of the currentLine
-                }
-
-                Serial.println();
-                String text = buffer;
-
-                //Serial.println(text);
-
-                if (text.endsWith("HTTP/1.1") && text.startsWith("GET /?")){
-                    Serial.println("Mon texte : "+text);
-
-                    String text_get = text.substring(6);
-                    Serial.println("Mon texte GET : "+text_get);
-
-                    text_get.replace("ssid=", "");
-                    text_get.replace("&Submit=Envoyer HTTP/1.1", "");
-                    text_get.replace("key=", "");
-
-
-                    Serial.println("Mon texte replace : "+text_get);
-
-                    int text_index = text_get.indexOf('&');
-
-                    String text_ssid = text_get.substring(0,text_index--);
-                    //text_ssid.replace("%20"," ");
-                    Serial.println("Mon texte SSID : "+text_ssid);
-
-                    text_get.replace(text_ssid+"&", "");
-                    text_get.replace("%21","!");
-                    Serial.println("Mon texte Key : "+text_get);
-
-                    html_ssid = text_ssid;
-                    html_password = text_get;
-
-                    // writeFile(html_ssid, html_password);
-
-                    // close the connection & Yellow led stop:
-                    digitalWrite(ledPin, LOW);
-                    myClient.stop();
-
-                    WiFi.disconnect();
-                    return 0;
                 }
             }
         }

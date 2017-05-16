@@ -5,28 +5,28 @@
 #include <ESP8266WiFi.h>
 #include "html/html.h"
 
-const char* ssid = "";
-const char* password = "";
-
-String html_ssid = "";
-String html_password = "";
-
-int ledPin = D5;
+// Config for webserver port
 WiFiServer server(80);
-int firstLaunch = 1;
 
-void initApMode() {
-    delay(500);
+// Config for connect to wifi AP
+const char* ssid = "MyWemosWifiAP";
+const char* password = "link";
 
-    Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode");
+//String html_ssid = "";
+//String html_password = "";
+//int ledPin = D5;
+//int firstLaunch = 1;
+
+void initSetupWifiAP() {
+    Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
 
     // Start WiFi and create a network with ssid as the network name
     // with password as the password.
-    Serial.print("Starting AP... ");
+    Serial.print("Starting AP...");
     WiFi.begin(ssid, password);
-    while (WiFi.localIP() == INADDR_NONE)
-    {
-        // print dots while we wait for the AP config to complete
+
+    // Print dots while we wait for the AP config to complete
+    while (WiFi.localIP() == INADDR_NONE){
         Serial.print('.');
         delay(300);
     }
@@ -41,8 +41,9 @@ void initApMode() {
     Serial.print("Webserver IP address = ");
     Serial.println(ip);
 
+    // Start the web server on port 80
     Serial.print("Web-server port = ");
-    server.begin();                           // start the web server on port 80
+    server.begin();
     Serial.println("80");
     Serial.println();
 }
@@ -129,6 +130,7 @@ void setApMode() {
 /*********************
 Init wifi in AP Mode
 **********************/
+/*
 void initWifi(){
     Serial.println("*** LaunchPad CC3200 WiFi Web-Server in AP Mode");
 
@@ -158,11 +160,12 @@ void initWifi(){
     Serial.println("80");
     Serial.println();
 }
-
+*/
 
 /*********************
 Wifi running in AP Mode
 **********************/
+/*
 int modeAP(){
     // Start Led
     digitalWrite(ledPin, HIGH);
@@ -261,3 +264,4 @@ int modeAP(){
         Serial.println();
     }
 }
+*/

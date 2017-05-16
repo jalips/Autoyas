@@ -15,35 +15,54 @@ void setup()
   delay(6000);
   // Display banner choose in banner manager
   displayBanner();
+  // Display some log
+  Serial.println("**********************************");
+  Serial.println("        Start of Setup");
+  Serial.println("**********************************");
   // Setup needed for temp
   initSetupTemp();
   // Setup needed for file
   initSetupFile();
 
-  pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
+  // Setup needed for Wifi Station
+  //initSetupWifiStation();
 
-  delay(5000);
+  // Setup needed for Wifi AP
+  initSetupWifiAP();
 
-  initApMode();
+  //pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
+
+  // Display some log
+  Serial.println("**********************************");
+  Serial.println("        End of Setup");
+  Serial.println("**********************************");
 }
 
 void loop()
 {
-  // Serial and delay for testing
-  Serial.println("Hello world");
+  // Delay for testing
   delay(2000);
+  // Display some log
+  Serial.println("**********************************");
+  Serial.println("        Start of Loop");
+  Serial.println("**********************************");
 
   // Get temp and hydro for testing
-  getTemp();
+  //getTemp();
 
   // Write file for testing
-  writeFile("houat", "Houat_WPA2!");
+  //writeFile("houat", "Houat_WPA2!");
 
   // Read file for testing
-  String returnFile = readFile();
-  Serial.println(returnFile);
+  //String returnFile = readFile();
+  //Serial.println(returnFile);
 
   // Delete file for testing
   //deleteFile();
   setApMode();
+
+  // Display some log
+  Serial.println("**********************************");
+  Serial.println("        End of Loop");
+  Serial.println("**********************************");
 }

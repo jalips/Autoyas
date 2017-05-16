@@ -5,7 +5,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 
-void init_station_mode_setup() {
+void initSetupWifiStation() {
   pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
 
   uint32_t realSize = ESP.getFlashChipRealSize();

@@ -59,7 +59,8 @@ void loop()
 
   // Delete file for testing
   //deleteFile();
-  setApMode();
+
+  loopWifiAP();
 
   // Display some log
   Serial.println("**********************************");

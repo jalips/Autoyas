@@ -3,14 +3,20 @@
 ***********************************************************************/
 
 #include <ESP8266WiFi.h>
+
 #include "html/html.h"
 
 // Config for webserver port
 WiFiServer server(80);
+//ESP8266WebServer server(80);
 
 // Config for connect to wifi AP
 const char* ssid = "MyWemosWifiAP";
 const char* password = "link";
+
+IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
+IPAddress gateway(192, 168, 1, 1); // set gateway to match your network
+IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
 //String html_ssid = "";
 //String html_password = "";
@@ -20,8 +26,60 @@ const char* password = "link";
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
 
+    Serial.print("Setting soft-AP configuration ... ");
+    Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
+
+    Serial.print("Setting soft-AP ... ");
+    Serial.println(WiFi.softAP("MyWemosWifiAP", "password") ? "Ready" : "Failed!");
+
+    Serial.print("Soft-AP IP address = ");
+    Serial.println(WiFi.softAPIP());
+
+    /* VERSION TEST 2
+    Serial.print("Setting soft-AP configuration ... ");
+    Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
+
+    Serial.print("Setting soft-AP ... ");
+    Serial.println(WiFi.softAP("ESPsoftAP_01") ? "Ready" : "Failed!");
+
+    Serial.print("Soft-AP IP address = ");
+    Serial.println(WiFi.softAPIP());
+    */
+
+    /* VERSION TEST
+    Serial.print(F("Setting static ip to : "));
+    Serial.println(ip);
+
+    // Connect to WiFi network
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    WiFi.config(ip, gateway, subnet);
+    WiFi.begin(ssid, password);
+
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
+    Serial.println("");
+    Serial.println("WiFi connected");
+
+    // Start the server
+    server.begin();
+    Serial.println("Server started");
+
+    // Print the IP address
+    Serial.print("Use this URL : ");
+    Serial.print("http://");
+    Serial.print(WiFi.localIP());
+    Serial.println("/");
+    */
+
+
+    // VERSION MANON
     // Start WiFi and create a network with ssid as the network name
     // with password as the password.
+    /*
     Serial.print("Starting AP...");
     WiFi.begin(ssid, password);
 
@@ -46,8 +104,69 @@ void initSetupWifiAP() {
     server.begin();
     Serial.println("80");
     Serial.println();
+    */
 }
 
+void loopWifiAP(){
+  Serial.printf("Stations connected = %d\n", WiFi.softAPgetStationNum());
+
+  /*
+  // Check if a client has connected
+  WiFiClient client = server.available();
+  if (!client) {
+    return;
+  }
+
+  // Wait until the client sends some data
+  Serial.println("new client");
+  while(!client.available()){
+    delay(1);
+  }
+
+  // Read the first line of the request
+  String request = client.readStringUntil('\r');
+  Serial.println(request);
+  client.flush();
+
+  // Match the request
+
+  int value = LOW;
+  if (request.indexOf("/LED=ON") != -1) {
+    Serial.println("LED=ON");
+  }
+  if (request.indexOf("/LED=OFF") != -1){
+    Serial.println("LED=OFF");
+  }
+
+
+
+  // Return the response
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-Type: text/html");
+  client.println(""); //  do not forget this one
+  client.println("<!DOCTYPE HTML>");
+  client.println("<html>");
+
+  client.print("Led pin is now: ");
+
+  if(value == HIGH) {
+    client.print("On");
+  } else {
+    client.print("Off");
+  }
+  client.println("<br><br>");
+  client.println("Click <a href=\"/LED=ON\">here</a> turn the LED on pin 5 ON<br>");
+  client.println("Click <a href=\"/LED=OFF\">here</a> turn the LED on pin 5 OFF<br>");
+  client.println("</html>");
+
+  delay(1);
+  Serial.println("Client disconnected");
+  Serial.println("");
+  */
+}
+
+
+/*
 void setApMode() {
 
     WiFiClient myClient = server.available();
@@ -124,7 +243,7 @@ void setApMode() {
         Serial.println();
     }
 }
-
+*/
 
 
 /*********************

@@ -17,12 +17,7 @@ IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 1); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
-//String html_ssid = "";
-//String html_password = "";
-//int ledPin = D5;
-//int firstLaunch = 1;
-
-
+/*
 void scanWifiNetwork(){
   int n = WiFi.scanNetworks();
   Serial.println("scan done");
@@ -44,22 +39,7 @@ void scanWifiNetwork(){
     }
   }
 }
-
-String prepareHtmlPage()
-{
-  String htmlPage =
-     String("HTTP/1.1 200 OK\r\n") +
-            "Content-Type: text/html\r\n" +
-            "Connection: close\r\n" +  // the connection will be closed after completion of the response
-            "Refresh: 5\r\n" +  // refresh the page automatically every 5 sec
-            "\r\n" +
-            "<!DOCTYPE HTML>" +
-            "<html>" +
-            "Analog input:  " + String(analogRead(A0)) +
-            "</html>" +
-            "\r\n";
-  return htmlPage;
-}
+*/
 
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");

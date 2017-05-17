@@ -30,6 +30,9 @@ void setup()
   // Setup needed for Wifi AP
   initSetupWifiAP();
 
+  // Loop fir wifi AP
+  loopWifiAP();
+
   // Setup needed for Wifi Station
   // initSetupWifiStation();
 
@@ -68,9 +71,6 @@ void loop()
 
   // Loop for wifi station
   //loopWifiStation();
-
-  // Loop fir wifi AP
-  loopWifiAP();
 
   // Loop for wifi station
   // loopWifiStation();

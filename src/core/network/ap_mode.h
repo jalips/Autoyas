@@ -68,6 +68,12 @@ void getResponse (String text) {
       String html_password = text_get;
 
       writeFile(html_ssid, html_password);
+
+      // close the connection & Yellow led stop:
+      //digitalWrite(GREEN_LED, LOW);
+
+      //myClient.stop();
+      //clearConnection();
   }
 }
 
@@ -106,12 +112,6 @@ void loopWifiAP(){
       {
         String line = client.readStringUntil('\r');
         Serial.print(line);
-
-        if (line.endsWith("HTTP/1.1") && line.startsWith("GET /?")){
-
-            getResponse(line);
-        }
-
         // wait for end of client's request, that is marked with an empty line
         if (line.length() == 1 && line[0] == '\n')
         {

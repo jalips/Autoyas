@@ -17,27 +17,6 @@ IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 1); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
-//String html_ssid = "";
-//String html_password = "";
-//int ledPin = D5;
-//int firstLaunch = 1;
-
-String prepareHtmlPage()
-{
-  String htmlPage =
-     String("HTTP/1.1 200 OK\r\n") +
-            "Content-Type: text/html\r\n" +
-            "Connection: close\r\n" +  // the connection will be closed after completion of the response
-            "Refresh: 5\r\n" +  // refresh the page automatically every 5 sec
-            "\r\n" +
-            "<!DOCTYPE HTML>" +
-            "<html>" +
-            "Analog input:  " + String(analogRead(A0)) +
-            "</html>" +
-            "\r\n";
-  return htmlPage;
-}
-
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
     // Doing some config for static IP
@@ -87,21 +66,10 @@ void loopWifiAP(){
 
     // close the connection:
     client.stop();
-    Serial.println("[Client disonnected]");
+    Serial.println("[Client disconnected]");
   }
 
   /*
-  // Check if a client has connected
-  WiFiClient client = server.available();
-  if (!client) {
-    return;
-  }
-
-  // Wait until the client sends some data
-  Serial.println("new client");
-  while(!client.available()){
-    delay(1);
-  }
 
   // Read the first line of the request
   String request = client.readStringUntil('\r');
@@ -118,109 +86,5 @@ void loopWifiAP(){
     Serial.println("LED=OFF");
   }
 
-
-
-  // Return the response
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  do not forget this one
-  client.println("<!DOCTYPE HTML>");
-  client.println("<html>");
-
-  client.print("Led pin is now: ");
-
-  if(value == HIGH) {
-    client.print("On");
-  } else {
-    client.print("Off");
-  }
-  client.println("<br><br>");
-  client.println("Click <a href=\"/LED=ON\">here</a> turn the LED on pin 5 ON<br>");
-  client.println("Click <a href=\"/LED=OFF\">here</a> turn the LED on pin 5 OFF<br>");
-  client.println("</html>");
-
-  delay(1);
-  Serial.println("Client disconnected");
-  Serial.println("");
   */
 }
-
-
-/*
-void setApMode() {
-
-    WiFiClient myClient = server.available();
-
-    if (myClient)
-    { // if you get a client,
-        Serial.println(". Client connected to server");           // print a message out the serial port
-        char buffer[150] = {0};                 // make a buffer to hold incoming data
-        int8_t i = 0;
-        while (myClient.connected())
-        { // loop while the client's connected
-            if (myClient.available())
-            { // if there's bytes to read from the client,
-                char c = myClient.read();             // read a byte, then
-                Serial.write(c);                    // print it out the serial monitor
-                if (c == '\n') {                    // if the byte is a newline character
-
-                    // if the current line is blank, you got two newline characters in a row.
-                    // that's the end of the client HTTP request, so send a response:
-                    if (strlen(buffer) == 0)
-                    {
-                        // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-                        // and a content-type so the client knows what's coming, then a blank line:
-                        myClient.println("HTTP/1.1 200 OK");
-                        myClient.println("Content-type:text/html");
-                        myClient.println();
-
-                        // the content of the HTTP response follows the header:
-                        myClient.println("<html><head><title>Wemos D1 WiFi Web-Server in AP Mode</title></head><body align=center>");
-                        myClient.println("<h1 align=center><font color=\"red\">Wemos D1 WiFi Web-Server in AP Mode</font></h1>");
-                        myClient.println("<FORM METHOD=\"GET\" ACTION=\"\">");
-                        myClient.println("<INPUT type=\"text\" name=\"ssid\">");
-                        myClient.println("<INPUT type=\"password\" name=\"password\">");
-                        myClient.println("<INPUT type=\"submit\">");
-                        myClient.println("</FORM>");
-
-                        // The HTTP response ends with another blank line:
-                        myClient.println();
-                        // break out of the while loop:
-                        break;
-                    }
-                    else
-                    { // if you got a newline, then clear the buffer:
-                        memset(buffer, 0, 150);
-                        i = 0;
-                    }
-                }
-                else if (c != '\r')
-                { // if you got anything else but a carriage return character,
-                    buffer[i++] = c;      // add it to the end of the currentLine
-                }
-
-                Serial.println();
-
-                String text = buffer;
-
-                // Check to see if the client request was "GET /H" or "GET /L":
-                if (text.endsWith(" HTTP/1.1") && text.startsWith("GET /?ssid="))
-                {
-                    text.replace(" HTTP/1.1", "");
-                    text.replace("GET /?ssid=", "");
-                    text.replace("password=", "");
-
-                    // TODO : Function missing
-                    //writeconf(text);
-                    //restart();
-                }
-            }
-        }
-
-        // close the connection:
-        myClient.stop();
-        Serial.println(". Client disconnected from server");
-        Serial.println();
-    }
-}
-*/

@@ -41,7 +41,7 @@ void setup()
 void loop()
 {
   // Delay for testing
-  //delay(1000);
+  delay(3000);
   // Display some log
   Serial.println("**********************************");
   Serial.println("        Start of Loop");

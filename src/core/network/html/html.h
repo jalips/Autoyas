@@ -1,27 +1,27 @@
-/************************************************************************
-* Use to display html page
-***********************************************************************/
-
 /*********************
 Display HTML form
 **********************/
-void displayHtmlForm(WiFiClient myClient){
-    // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-    // and a content-type so the client knows what's coming, then a blank line:
-    myClient.println("HTTP/1.1 200 OK");
-    myClient.println("Content-type:text/html");
-    myClient.println();
-
-    // the content of the HTTP response follows the header:
-    myClient.println("<html><head><title>Wemos D1 Web-Server in AP Mode</title></head><body align=center>");
-    myClient.println("<h1 align=center><font color=\"green\">Wemos D1 WiFi Web-Server in AP Mode</font></h1>");
-    myClient.print("<form method='get'>");
-    myClient.print("SSID :");
-    myClient.print("<input type='text' name='ssid'>");
-    myClient.println("<br>");
-    myClient.print("Key :");
-    myClient.print("<input type='text' name='password'>");
-    myClient.println("<br>");
-    myClient.print("<input type='submit' name='Submit'>");
-    myClient.print("</form>");
+String prepareHtmlPage()
+{
+  String htmlPage =
+     String("HTTP/1.1 200 OK\r\n") +
+            "Content-Type: text/html\r\n" +
+            "Connection: close\r\n" +  // the connection will be closed after completion of the response
+            "Refresh: 5\r\n" +  // refresh the page automatically every 5 sec
+            "\r\n" +
+            "<!DOCTYPE HTML>" +
+            "<html><head><title>Wemos D1 Web-Server in AP Mode</title></head><body align=center>" +
+            "<h1 align=center><font color=\"green\">Wemos D1 WiFi Web-Server in AP Mode</font></h1>" +
+            "<form method='get'>" +
+            "<label for='ssid'>SSID :</label>" +
+            "<input type='text' id='ssid' name='ssid'>" +
+            "<br>" +
+            "<label for='password'>Key :</label>" +
+            "<input type='text' id='password' name='password'>" +
+            "<br>" +
+            "<input type='submit' name='Submit' value='Connection'>" +
+            "</form>" +
+            "</html>" +
+            "\r\n";
+  return htmlPage;
 }

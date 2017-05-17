@@ -28,7 +28,10 @@ void setup()
   //initSetupWifiStation();
 
   // Setup needed for Wifi AP
-  initSetupWifiAP();
+  //initSetupWifiAP();
+
+  // Setup needed for Wifi Station
+  initSetupWifiStation();
 
   //pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
 
@@ -60,7 +63,11 @@ void loop()
   // Delete file for testing
   //deleteFile();
 
-  loopWifiAP();
+  // Loop for wifi station
+  loopWifiStation();
+
+  // Loop fir wifi AP
+  //loopWifiAP();
 
   // Display some log
   Serial.println("**********************************");

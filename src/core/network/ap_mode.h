@@ -17,6 +17,50 @@ IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 1); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
+//String html_ssid = "";
+//String html_password = "";
+//int ledPin = D5;
+//int firstLaunch = 1;
+
+
+void scanWifiNetwork(){
+  int n = WiFi.scanNetworks();
+  Serial.println("scan done");
+  if (n == 0) {
+    Serial.println("no networks found");
+  } else {
+    Serial.print(n);
+    Serial.println(" networks found");
+    for (int i = 0; i < n; ++i) {
+      // Print SSID and RSSI for each network found
+      Serial.print(i + 1);
+      Serial.print(": ");
+      Serial.print(WiFi.SSID(i));
+      Serial.print(" (");
+      Serial.print(WiFi.RSSI(i));
+      Serial.print(")");
+      Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE)?" ":"*");
+      delay(10);
+    }
+  }
+}
+
+String prepareHtmlPage()
+{
+  String htmlPage =
+     String("HTTP/1.1 200 OK\r\n") +
+            "Content-Type: text/html\r\n" +
+            "Connection: close\r\n" +  // the connection will be closed after completion of the response
+            "Refresh: 5\r\n" +  // refresh the page automatically every 5 sec
+            "\r\n" +
+            "<!DOCTYPE HTML>" +
+            "<html>" +
+            "Analog input:  " + String(analogRead(A0)) +
+            "</html>" +
+            "\r\n";
+  return htmlPage;
+}
+
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
     // Doing some config for static IP

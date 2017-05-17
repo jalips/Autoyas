@@ -33,6 +33,9 @@ void setup()
   // Setup needed for Wifi Station
   initSetupWifiStation();
 
+  // Setup needed for MQTT
+  initSetupMQTT();
+
   //pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
 
   // Display some log
@@ -64,10 +67,16 @@ void loop()
   //deleteFile();
 
   // Loop for wifi station
-  loopWifiStation();
+  //loopWifiStation();
 
   // Loop fir wifi AP
   //loopWifiAP();
+
+  // Loop for wifi station
+  loopWifiStation();
+
+  // Loop for MQTT
+  loopMQTT();
 
   // Display some log
   Serial.println("**********************************");

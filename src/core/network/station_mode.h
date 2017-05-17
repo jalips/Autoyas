@@ -44,24 +44,17 @@ void initSetupWifiStation() {
 
 void loopWifiStation() {
 
-
-  if (wifiMulti.run() != WL_CONNECTED)
-  {
-    if (connectioWasAlive == true)
-    {
+  if (wifiMulti.run() != WL_CONNECTED) {
+    if (connectioWasAlive == true) {
       connectioWasAlive = false;
       Serial.print("Looking for WiFi ");
     }
     Serial.print(".");
     delay(500);
-  }
-  else if (connectioWasAlive == false)
-  {
+  } else if (connectioWasAlive == false) {
     connectioWasAlive = true;
     Serial.printf(" connected to %s\n", WiFi.SSID().c_str());
   }
-
-
 
   /*
   digitalWrite(BUILTIN_LED, HIGH);  // turn on LED with voltage HIGH

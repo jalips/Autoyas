@@ -41,6 +41,42 @@ void scanWifiNetwork(){
 }
 */
 
+void getResponse (String text) {
+  Serial.println("Mon texte : "+text);
+
+  if (text.endsWith("HTTP/1.1") && text.startsWith("GET /?")){
+
+      String text_get = text.substring(6);
+      Serial.println("Mon texte GET : "+text_get);
+
+      text_get.replace("ssid=", "");
+      text_get.replace("&Submit=Envoyer HTTP/1.1", "");
+      text_get.replace("key=", "");
+
+      Serial.println("Mon texte replace : "+text_get);
+
+      int text_index = text_get.indexOf('&');
+      String text_ssid = text_get.substring(0,text_index--);
+      //text_ssid.replace("%20"," ");
+      Serial.println("Mon texte SSID : "+text_ssid);
+
+      text_get.replace(text_ssid+"&", "");
+      text_get.replace("%21","!");
+      Serial.println("Mon texte Key : "+text_get);
+
+      String html_ssid = text_ssid;
+      String html_password = text_get;
+
+      writeFile(html_ssid, html_password);
+
+      // close the connection & Yellow led stop:
+      //digitalWrite(GREEN_LED, LOW);
+
+      //myClient.stop();
+      //clearConnection();
+  }
+}
+
 void initSetupWifiAP() {
     Serial.println("*** Wemos D1 WiFi Web-Server in AP Mode ***");
     // Doing some config for static IP
@@ -53,14 +89,12 @@ void initSetupWifiAP() {
     Serial.print("Soft-AP IP address = ");
     Serial.println(WiFi.softAPIP());
 
-
     // Start the web server on port 80
     Serial.print("Webserver IP address = " + local_IP);
     Serial.print("Web-server port = ");
     server.begin();
     Serial.println("80");
     Serial.println();
-
 }
 
 void loopWifiAP(){
@@ -94,14 +128,12 @@ void loopWifiAP(){
   }
 
   /*
-
   // Read the first line of the request
   String request = client.readStringUntil('\r');
   Serial.println(request);
   client.flush();
 
   // Match the request
-
   int value = LOW;
   if (request.indexOf("/LED=ON") != -1) {
     Serial.println("LED=ON");
@@ -109,6 +141,5 @@ void loopWifiAP(){
   if (request.indexOf("/LED=OFF") != -1){
     Serial.println("LED=OFF");
   }
-
   */
 }

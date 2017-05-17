@@ -88,7 +88,7 @@ String prepareHtmlPage()
             "<label for='password'>Key :</label>" +
             "<input type='text' id='password' name='password'>" +
             "</div>" +
-            "<input type='submit' name='Submit' value='Connection' class='btn'>" +
+            "<input type='submit' name='Submit' class='btn'>" +
             "</form>" +
             "</html>" +
             "\r\n";

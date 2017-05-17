@@ -40,6 +40,7 @@ String prepareHtmlPage()
             "}" +
             "input {" +
             "  background-color: transparent;" +
+            "  color: lightseagreen" +
             "  border: none;" +
             "  border-bottom: 1px solid grey;" +
             "  border-radius: 0;" +
@@ -54,7 +55,6 @@ String prepareHtmlPage()
             "  transition: all 0.3s;" +
             "}" +
             "input:focus {" +
-            "  color: lightseagreen" +
             "  border-bottom: 1px solid lightseagreen;" +
             "  box-shadow: 0 1px 0 0 lightseagreen;" +
             "}" +
@@ -78,7 +78,7 @@ String prepareHtmlPage()
             "}" +
             "</style>" +
             "<body>" +
-            "<h1>Wemos D1 WiFi Web-Server in AP Mode</h1>" +
+            "<h1>Saisissez les informations de votre Wifi</h1>" +
             "<form method='get'>" +
             "<div class='input-field'>" +
             "<label for='ssid'>SSID :</label>" +

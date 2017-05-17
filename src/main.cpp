@@ -28,7 +28,13 @@ void setup()
   //initSetupWifiStation();
 
   // Setup needed for Wifi AP
-  initSetupWifiAP();
+  //initSetupWifiAP();
+
+  // Setup needed for Wifi Station
+  initSetupWifiStation();
+
+  // Setup needed for MQTT
+  initSetupMQTT();
 
   //pinMode(BUILTIN_LED, OUTPUT);  // initialize onboard LED as output
 
@@ -41,7 +47,7 @@ void setup()
 void loop()
 {
   // Delay for testing
-  delay(3000);
+  delay(2000);
   // Display some log
   Serial.println("**********************************");
   Serial.println("        Start of Loop");
@@ -60,7 +66,17 @@ void loop()
   // Delete file for testing
   //deleteFile();
 
-  loopWifiAP();
+  // Loop for wifi station
+  //loopWifiStation();
+
+  // Loop fir wifi AP
+  //loopWifiAP();
+
+  // Loop for wifi station
+  loopWifiStation();
+
+  // Loop for MQTT
+  loopMQTT();
 
   // Display some log
   Serial.println("**********************************");

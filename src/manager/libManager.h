@@ -9,5 +9,5 @@
 #include "../core/storage/local.h"
 
 #include "../core/network/mqtt.h"
-#include "../core/network/station_mode.h"
-#include "../core/network/ap_mode.h"
+#include "../core/network/wifi/station_mode.h"
+#include "../core/network/wifi/ap_mode.h"

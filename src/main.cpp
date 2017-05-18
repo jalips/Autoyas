@@ -81,6 +81,7 @@ void loop()
   loopWifiStation();
 
   // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
+  
 
   // Get temp for testing
   //getTemp();

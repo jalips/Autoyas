@@ -4,7 +4,7 @@
 
 #include <ESP8266WiFi.h>
 
-#include "html/html.h"
+#include "../html/html.h"
 
 // Config for webserver port
 WiFiServer server(80);

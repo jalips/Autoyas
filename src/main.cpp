@@ -5,8 +5,12 @@
 #include "Arduino.h"
 #include "manager/libManager.h"
 
+// Baud speed for serial monitor
 int baudSpeed = 115200;
+// Init wifi conf at false because we don't know
 int isWifiConf = 0;
+// Init first launch at true because it's true
+int isFirstLaunch = 1;
 
 void setup()
 {
@@ -20,6 +24,7 @@ void setup()
 
   // Display banner choose in banner manager
   displayBanner();
+
   // Display some log
   Serial.println("**********************************");
   Serial.println("        Start of Setup");
@@ -30,27 +35,28 @@ void setup()
   // Setup needed for file
   initSetupFile();
 
-  // If there is something in confFile
-  String returnFile = readFile();
-  // TODO : test if there is something in file to go wifi station
-  // if(returnFile) {
-  //   isWifiConf = 1;
-  // } else {
-  //   // Setup needed for Wifi AP
-  //   initSetupWifiAP();
-  //   // Loop fir wifi AP
-  //   loopWifiAP();
-  // }
-  //
-  //   // Setup needed for Wifi Station
-  //   initSetupWifiStation();
-  // Setup needed for MQTT
-  // initSetupMQTT();
-
-  while(isWifiConf == 0){
-    // Stay in setup !
+  while(!isWifiConf){
+    // Test if there is a file conf set
+    if(isFile()) {
+      isWifiConf = 1;
+    }else{
+      if(isFirstLaunch){
+        // Setup needed for Wifi AP
+        initSetupWifiAP();
+        // And now it's not the first launch anymore
+        isFirstLaunch = 0;
+      }
+      // Loop fir wifi AP
+      loopWifiAP();
+    }
+    // Stay in setup until we don't have a conf file
     delay(2000);
   }
+
+  // Setup needed for Wifi Station
+  initSetupWifiStation();
+  // Setup needed for MQTT
+  initSetupMQTT();
 
   // Display some log
   Serial.println("**********************************");
@@ -71,7 +77,6 @@ void loop()
 
   // Loop for wifi station
   //loopWifiStation();
-
 
   // Get temp for testing
   //getTemp();

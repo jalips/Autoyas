@@ -15,6 +15,24 @@ void initSetupFile(){
 /*********************
 Read file for conf
 **********************/
+int isFile(){
+  Serial.println("====== Reading from SPIFFS file =======");
+  // Init at false
+  int isFile = 0;
+  File f = SPIFFS.open(wifi_file_name, "r");
+  if (f) {
+    // file open
+    isFile = 1;
+    Serial.println("A file is present");
+  }else{
+    Serial.println("A file is not present valar morghulis !");
+  }
+  return isFile;
+}
+
+/*********************
+Read file for conf
+**********************/
 String readFile(){
   Serial.println("====== Reading from SPIFFS file =======");
   String s = "";

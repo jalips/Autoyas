@@ -4,9 +4,7 @@
 
 #include "FS.h"
 
-String wifi_file_directory = "/";
-String wifi_file_name = "wifi.txt";
-String wifi_file = wifi_file_directory+wifi_file_name;
+String wifi_file_name = "/wifi/conf.txt";
 
 void initSetupFile(){
   if(SPIFFS.begin()){
@@ -15,21 +13,21 @@ void initSetupFile(){
 }
 
 /*********************
-Read file for conf
+Check file for conf
 **********************/
 int isFile(){
-  Dir dir = SPIFFS.openDir("/");
+  Dir dir = SPIFFS.openDir("/wifi");
   while (dir.next()) {
     String fileName = dir.fileName();
     //size_t fileSize = dir.fileSize();
     //Serial.printf("FS File: %s, size: %s\n", fileName.c_str(), String(fileSize).c_str());
     if(fileName == wifi_file_name){
-      Serial.println("There is file "+fileName);
+      Serial.println("There is file "+wifi_file_name);
       return 1;
     }
-    Serial.println("There is no file "+wifi_file_name+ ", stay in AP Mode.");
-    return 0;
   }
+  Serial.println("There is no file "+wifi_file_name+ ", stay in AP Mode.");
+  return 0;
 }
 
 /*********************
@@ -39,7 +37,7 @@ String readFile(){
   Serial.println("====== Reading from SPIFFS file =======");
   String s = "";
   // open file for reading
-  File f = SPIFFS.open(wifi_file, "r");
+  File f = SPIFFS.open(wifi_file_name, "r");
   if (!f) {
     Serial.println("file open failed");
   }else{
@@ -54,7 +52,7 @@ Write File
 **********************/
 void writeFile(String ssid, String key){
   Serial.println("====== Writing to SPIFFS file =========");
-  File f = SPIFFS.open(wifi_file, "w");
+  File f = SPIFFS.open(wifi_file_name, "w");
   if (!f) {
     Serial.println("file open failed");
   }else{
@@ -68,7 +66,7 @@ void writeFile(String ssid, String key){
 Delete File
 **********************/
 void deleteFile(){
-  if(SPIFFS.remove(wifi_file)){
+  if(SPIFFS.remove(wifi_file_name)){
     Serial.println("file deleted");
   }else{
     Serial.println("file not deleted");

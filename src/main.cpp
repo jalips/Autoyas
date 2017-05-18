@@ -35,8 +35,9 @@ void setup()
   // Setup needed for file
   initSetupFile();
 
-  // For testing -> Delete file
+  // For testing -> Delete or Write file
   //deleteFile();
+  //writeFile("Houat", "Houat_WPA2!");
 
   while(!isWifiConf){
     // Test if there is a file conf set
@@ -76,10 +77,10 @@ void loop()
   Serial.println("        Start of Loop");
   Serial.println("**********************************");
 
-  // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
-
   // Loop for wifi station
-  //loopWifiStation();
+  loopWifiStation();
+
+  // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
 
   // Get temp for testing
   //getTemp();

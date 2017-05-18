@@ -10,7 +10,8 @@
 WiFiServer server(80);
 
 // Config for connect to wifi AP
-const char* ssid = "AutoyasWifi";
+//const char* ssid = "AutoyasWifi";
+const char* ssid = "MyWemosWifiAP";
 const char* password = "password";
 
 IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address
@@ -91,11 +92,9 @@ void initSetupWifiAP() {
     */
 
     // Start the web server on port 80
-    Serial.print("Webserver IP address = " + local_IP);
-    Serial.print("Web-server port = ");
+    Serial.println("Webserver IP address = " + local_IP);
+    Serial.println("Web-server port = 80");
     server.begin();
-    Serial.println("80");
-    Serial.println();
 }
 
 void loopWifiAP(){

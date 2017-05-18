@@ -19,9 +19,6 @@ void setup()
   // Wait for serial port to connect.
   delay(5000);
 
-  // For testing -> Delete file
-  deleteFile();
-
   // TODO : initialize onboard LED as output
   //pinMode(BUILTIN_LED, OUTPUT);
 
@@ -37,6 +34,9 @@ void setup()
   initSetupTemp();
   // Setup needed for file
   initSetupFile();
+
+  // For testing -> Delete file
+  //deleteFile();
 
   while(!isWifiConf){
     // Test if there is a file conf set

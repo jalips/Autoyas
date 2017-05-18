@@ -16,18 +16,18 @@ void initSetupFile(){
 Read file for conf
 **********************/
 int isFile(){
-  Serial.println("====== Reading from SPIFFS file =======");
-  // Init at false
-  int isFile = 0;
-  File f = SPIFFS.open(wifi_file_name, "r");
-  if (f) {
-    // file open
-    isFile = 1;
-    Serial.println("A file is present");
-  }else{
-    Serial.println("A file is not present valar morghulis !");
+  Dir dir = SPIFFS.openDir("/");
+  while (dir.next()) {
+    String fileName = dir.fileName();
+    //size_t fileSize = dir.fileSize();
+    //Serial.printf("FS File: %s, size: %s\n", fileName.c_str(), String(fileSize).c_str());
+    if(fileName == wifi_file_name){
+      Serial.println("There is file "+fileName);
+      return 1;
+    }
+    Serial.println("There is no file "+wifi_file_name+ " stay in AP Mode.");
+    return 0;
   }
-  return isFile;
 }
 
 /*********************

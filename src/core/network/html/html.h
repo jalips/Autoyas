@@ -41,12 +41,15 @@ String prepareHtmlPage()
             "input {" +
             "  background-color: transparent;" +
             "  color: lightseagreen" +
-            "  border: none;" +
+            "  border-top: none;" +
+            "  border-left: none;" +
+            "  border-right: none;" +
             "  border-bottom: 1px solid grey;" +
             "  border-radius: 0;" +
             "  outline: none;" +
             "  height: 3rem;" +
             "  width: 100%;" +
+            "  max-width: 600px;" +
             "  font-size: 1rem;" +
             "  margin: 0 0 20px 0;" +
             "  padding: 0;" +
@@ -88,7 +91,7 @@ String prepareHtmlPage()
             "<label for='password'>Key :</label>" +
             "<input type='text' id='password' name='password'>" +
             "</div>" +
-            "<input type='submit' name='Submit' class='btn'>" +
+            "<button type='submit' class='btn'>Save</button>" +
             "</form>" +
             "</html>" +
             "\r\n";

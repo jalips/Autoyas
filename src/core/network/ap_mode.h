@@ -50,8 +50,8 @@ void getResponse (String text) {
       Serial.println("Mon texte GET : "+text_get);
 
       text_get.replace("ssid=", "");
-      text_get.replace("&Submit=Envoyer HTTP/1.1", "");
-      text_get.replace("key=", "");
+      text_get.replace("HTTP/1.1", "");
+      text_get.replace("password=", "");
 
       Serial.println("Mon texte replace : "+text_get);
 

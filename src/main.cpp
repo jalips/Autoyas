@@ -20,7 +20,7 @@ void setup()
   delay(6000);
 
   // For testing -> Delete file
-  //deleteFile();
+  deleteFile();
 
   // TODO : initialize onboard LED as output
   //pinMode(BUILTIN_LED, OUTPUT);

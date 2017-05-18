@@ -4,7 +4,9 @@
 
 #include "FS.h"
 
-String wifi_file_name = "/wifi.txt";
+String wifi_file_directory = "/";
+String wifi_file_name = "wifi.txt";
+String wifi_file = wifi_file_directory+wifi_file_name;
 
 void initSetupFile(){
   if(SPIFFS.begin()){
@@ -37,7 +39,7 @@ String readFile(){
   Serial.println("====== Reading from SPIFFS file =======");
   String s = "";
   // open file for reading
-  File f = SPIFFS.open(wifi_file_name, "r");
+  File f = SPIFFS.open(wifi_file, "r");
   if (!f) {
     Serial.println("file open failed");
   }else{
@@ -52,7 +54,7 @@ Write File
 **********************/
 void writeFile(String ssid, String key){
   Serial.println("====== Writing to SPIFFS file =========");
-  File f = SPIFFS.open(wifi_file_name, "w");
+  File f = SPIFFS.open(wifi_file, "w");
   if (!f) {
     Serial.println("file open failed");
   }else{
@@ -66,7 +68,7 @@ void writeFile(String ssid, String key){
 Delete File
 **********************/
 void deleteFile(){
-  if(SPIFFS.remove(wifi_file_name)){
+  if(SPIFFS.remove(wifi_file)){
     Serial.println("file deleted");
   }else{
     Serial.println("file not deleted");

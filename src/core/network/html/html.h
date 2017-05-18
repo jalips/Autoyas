@@ -85,11 +85,11 @@ String prepareHtmlPage()
             "<form method='get'>" +
             "<div class='input-field'>" +
             "<label for='ssid'>SSID :</label>" +
-            "<input type='text' id='ssid' name='ssid'>" +
+            "<input type='text' id='ssid' name='ssid' value='Houat' >" +
             "</div>" +
             "<div class='input-field'>" +
             "<label for='password'>Key :</label>" +
-            "<input type='text' id='password' name='password'>" +
+            "<input type='text' id='password' name='password' value='Houat_WPA2!' >" +
             "</div>" +
             "<button type='submit' class='btn'>Save</button>" +
             "</form>" +

@@ -109,7 +109,6 @@ void loopWifiAP(){
         Serial.print(line);
 
         if (line.endsWith("HTTP/1.1") && line.startsWith("GET /?")){
-
             getResponse(line);
         }
 
@@ -127,20 +126,4 @@ void loopWifiAP(){
     client.stop();
     Serial.println("[Client disconnected]");
   }
-
-  /*
-  // Read the first line of the request
-  String request = client.readStringUntil('\r');
-  Serial.println(request);
-  client.flush();
-
-  // Match the request
-  int value = LOW;
-  if (request.indexOf("/LED=ON") != -1) {
-    Serial.println("LED=ON");
-  }
-  if (request.indexOf("/LED=OFF") != -1){
-    Serial.println("LED=OFF");
-  }
-  */
 }

@@ -24,26 +24,26 @@ void setup()
   Serial.println("**********************************");
   Serial.println("        Start of Setup");
   Serial.println("**********************************");
+
   // Setup needed for temp
   initSetupTemp();
   // Setup needed for file
   initSetupFile();
 
-  // Setup needed for Wifi AP
-  initSetupWifiAP();
-
-  // Loop fir wifi AP
-  loopWifiAP();
-
   // If there is something in confFile
   String returnFile = readFile();
   // TODO : test if there is something in file to go wifi station
-
-  // Setup needed for Wifi Station
-  // initSetupWifiStation();
-
-  // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
-
+  // if(returnFile) {
+  //   isWifiConf = 1;
+  // } else {
+  //   // Setup needed for Wifi AP
+  //   initSetupWifiAP();
+  //   // Loop fir wifi AP
+  //   loopWifiAP();
+  // }
+  //
+  //   // Setup needed for Wifi Station
+  //   initSetupWifiStation();
   // Setup needed for MQTT
   // initSetupMQTT();
 
@@ -67,17 +67,18 @@ void loop()
   Serial.println("        Start of Loop");
   Serial.println("**********************************");
 
-  // Get temp and hydro for testing
-  //getTemp();
-
-  // Delete file for testing
-  //deleteFile();
-
-  // Loop for wifi AP
-  loopWifiAP();
+  // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
 
   // Loop for wifi station
   //loopWifiStation();
+
+
+  // Get temp for testing
+  //getTemp();
+
+  // Get hydro for testing
+
+  // Get device's filling level
 
   // Loop for MQTT
   // loopMQTT();

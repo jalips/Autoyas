@@ -10,7 +10,7 @@
 WiFiServer server(80);
 
 // Config for connect to wifi AP
-const char* ssid = "MyAutoyasWifi";
+const char* ssid = "AutoyasWifi";
 const char* password = "password";
 
 IPAddress local_IP(192, 168, 1, 7); // where xx is the desired IP Address

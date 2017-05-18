@@ -17,7 +17,7 @@ void setup()
   // Setup baud speed
   Serial.begin(baudSpeed);
   // Wait for serial port to connect.
-  delay(6000);
+  delay(5000);
 
   // For testing -> Delete file
   deleteFile();

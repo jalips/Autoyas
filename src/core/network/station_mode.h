@@ -39,11 +39,13 @@ void initSetupWifiStation() {
   Serial.print("With password: ");
   Serial.println(station_password);
 
-  wifiMulti.addAP(station_ssid, station_password);
 
   // Set WiFi to station mode and disconnect from an AP if it was previously connected
-  //WiFi.mode(WIFI_STA);
-  //WiFi.disconnect();
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+
+  // Add network
+  wifiMulti.addAP(station_ssid, station_password);
 }
 
 void loopWifiStation() {

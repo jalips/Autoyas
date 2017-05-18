@@ -27,7 +27,7 @@ int isFile(){
       Serial.println("There is file "+fileName);
       return 1;
     }
-    Serial.println("There is no file "+wifi_file_name+ " stay in AP Mode.");
+    Serial.println("There is no file "+wifi_file_name+ ", stay in AP Mode.");
     return 0;
   }
 }

@@ -92,6 +92,7 @@ void initSetupWifiAP() {
 }
 
 void loopWifiAP(){
+
   Serial.printf("Stations connected = %d\n", WiFi.softAPgetStationNum());
 
   WiFiClient client = server.available();

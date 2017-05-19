@@ -6,6 +6,7 @@
 
 #include "../core/sensor/tempHydro.h"
 #include "../core/sensor/water.h"
+#include "../core/sensor/valve.h"
 
 #include "../core/storage/local.h"
 

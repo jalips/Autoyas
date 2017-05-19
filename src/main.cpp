@@ -72,6 +72,7 @@ void loop()
 {
   // Delay for testing
   delay(2000);
+
   // Display some log
   Serial.println("**********************************");
   Serial.println("        Start of Loop");
@@ -82,17 +83,25 @@ void loop()
 
   // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
 
-  // Get temp
+  // Get temp & send it to MQTT
   float temp = loopTemp();
+  loopMQTT("sensor/temp", String(temp).c_str());
 
-  // Get hydro
+  // Get hydro & send it to MQTT
   float hydro = loopHydro();
+  loopMQTT("sensor/hydro", String(hydro).c_str());
 
-  // Get device's filling level
+  // Get device's filling level & send it to MQTT
   int waterMesure = loopWater();
+  loopMQTT("sensor/water", String(waterMesure).c_str());
 
-  // Loop for MQTT
-  // loopMQTT();
+  // Check if we need to open valve
+  if(waterMesure < 60){
+    loopValveOn();
+    delay(2000);
+    loopValveOff();
+    delay(2000);
+  }
 
   // Display some log
   Serial.println("**********************************");

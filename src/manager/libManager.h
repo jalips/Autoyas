@@ -5,6 +5,7 @@
 #include "../core/banner/bannerManager.h"
 
 #include "../core/sensor/tempHydro.h"
+#include "../core/sensor/water.h"
 
 #include "../core/storage/local.h"
 

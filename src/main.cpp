@@ -81,14 +81,15 @@ void loop()
   loopWifiStation();
 
   // TODO : call API to register while in Wifi Station and go to setup MQTT and loop !
-  
 
-  // Get temp for testing
-  //getTemp();
+  // Get temp
+  float temp = loopTemp();
 
-  // Get hydro for testing
+  // Get hydro
+  float hydro = loopHydro();
 
   // Get device's filling level
+  int waterMesure = loopWater();
 
   // Loop for MQTT
   // loopMQTT();

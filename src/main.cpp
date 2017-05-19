@@ -98,8 +98,10 @@ void loop()
   // Check if we need to open valve
   if(waterMesure < 60){
     loopValveOn();
+    loopMQTT("sensor/valve", "on");
     delay(2000);
     loopValveOff();
+    loopMQTT("sensor/valve", "off");
     delay(2000);
   }
 

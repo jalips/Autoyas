@@ -8,8 +8,8 @@
 ESP8266WiFiMulti wifiMulti;
 boolean connectioWasAlive = true;
 
-//const char* station_ssid = "MyRedmi";
-//const char* station_pass = "password";
+const char* station_ssid_test = "SFR-0c78";
+const char* station_pass_test = "DVZ25M395J65";
 
 void initSetupWifiStation() {
   // get indexof & symbol in wifi config string from wifi config file
@@ -39,17 +39,72 @@ void initSetupWifiStation() {
   Serial.print("With password: ");
   Serial.println(station_password);
 
-
   // Set WiFi to station mode and disconnect from an AP if it was previously connected
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
 
   // Add network
-  wifiMulti.addAP(station_ssid, station_password);
+  //wifiMulti.addAP(station_ssid, station_password);
+
+  WiFi.begin(station_ssid_test, station_pass_test);
+  //WiFi.config(staticIP, gateway, subnet);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(1000);
+    switch (WiFi.status()) {
+      case 0:
+        // when Wi-Fi is in process of changing between statuses
+        Serial.println("WL_IDLE_STATUS");
+        break;
+      case 1:
+        // in case configured SSID cannot be reached
+        Serial.println("WL_NO_SSID_AVAIL");
+        break;
+      case 3:
+        // after successful connection is established
+        Serial.println("WL_CONNECTED");
+        break;
+      case 4:
+        // if password is incorrect
+        Serial.println("WL_CONNECT_FAILED");
+        break;
+      case 6:
+        // if module is not configured in station mode
+        Serial.println("WL_DISCONNECTED");
+        break;
+    }
+  }
+  Serial.println();
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
 }
 
 void loopWifiStation() {
 
+  switch (WiFi.status()) {
+    case 0:
+      // when Wi-Fi is in process of changing between statuses
+      Serial.print("WL_IDLE_STATUS");
+      break;
+    case 1:
+      // in case configured SSID cannot be reached
+      Serial.print("WL_NO_SSID_AVAIL");
+      break;
+    case 3:
+      // after successful connection is established
+      Serial.print("WL_CONNECTED");
+      break;
+    case 4:
+      // if password is incorrect
+      Serial.print("WL_CONNECT_FAILED");
+      break;
+    case 6:
+      // if module is not configured in station mode
+      Serial.print("WL_DISCONNECTED");
+      break;
+  }
+
+  /*
   if (wifiMulti.run() != WL_CONNECTED) {
     if (connectioWasAlive == true) {
       connectioWasAlive = false;
@@ -63,5 +118,6 @@ void loopWifiStation() {
     Serial.print("=> Addresse IP : ");
     Serial.print(WiFi.localIP());
   }
+  */
 
 }

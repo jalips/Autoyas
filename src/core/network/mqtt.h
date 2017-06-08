@@ -7,7 +7,7 @@
 #include <PubSubClient.h>
 
 // Broker adress
-#define mqtt_server "broker.hivemq.com"
+#define mqtt_server "jalips.ddns.net"
 #define mqtt_user ""
 #define mqtt_password ""
 
@@ -19,6 +19,7 @@ PubSubClient client(espClient);
 //#define humidity_topic "sensor/hydro"
 
 void reconnect() {
+  int nbTry = 0;
   while (!client.connected()) {
     Serial.print("Connexion au serveur MQTT...");
     //if (client.connect("ESP8266Client", mqtt_user, mqtt_password)) {
@@ -29,6 +30,10 @@ void reconnect() {
       Serial.print(client.state());
       Serial.println(" On attend 5 secondes avant de recommencer");
       delay(5000);
+    }
+    nbTry++;
+    if(nbTry == 1){
+      break;
     }
   }
 }
@@ -41,6 +46,8 @@ void initSetupMQTT(){
 void loopMQTT(const char* topic, const char* message){
   if (!client.connected()) {
     reconnect();
+  }else{
+    Serial.println("Still connected with MQTT Broker");
   }
   client.loop();
 

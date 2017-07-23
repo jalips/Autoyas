@@ -31,13 +31,15 @@ void setup()
   Serial.println("**********************************");
 
   // Setup needed for temp
-  //initSetupTemp();
+  initSetupTemp();
   // Setup needed for file
   initSetupFile();
 
   // For testing -> Delete or Write file
   deleteFile();
   writeFile("SFR-0c78", "DVZ25M395J65");
+  //writeFile("MyRedmi", "password");
+
 
   while(!isWifiConf){
     // Test if there is a file conf set
@@ -82,31 +84,36 @@ void loop()
   loopWifiStation();
 
   // Call API to register OR StayAlive
-  callAPIForStayingAlive(getMacAdress());
+  //callAPIForStayingAlive(getMacAdress());
 
   // Get temp & send it to MQTT
-  //float temp = loopTemp();
-  //loopMQTT("sensor/temp", String(temp).c_str());
+  float temp = loopTemp();
+  String tempString = getMacAdress()+"***"+String(temp);
+  const char *tempMessage = tempString.c_str();
+  loopMQTT("sensor/temp", tempMessage);
 
   // Get hydro & send it to MQTT
-  //float hydro = loopHydro();
-  //loopMQTT("sensor/hydro", String(hydro).c_str());
+  float hydro = loopHydro();
+  String hydroString = getMacAdress()+"***"+String(hydro);
+  const char *hydroMessage = hydroString.c_str();
+  loopMQTT("sensor/hydro", hydroMessage);
 
   // Get device's filling level & send it to MQTT
-  //int waterMesure = loopWater();
-  //loopMQTT("sensor/water", String(waterMesure).c_str());
+  int waterMesure = loopWater();
+  String waterString = getMacAdress()+"***"+String(waterMesure);
+  const char *waterMessage = waterString.c_str();
+  loopMQTT("sensor/water", waterMessage);
 
   // Check if we need to open valve
-  /*
   if(waterMesure < 600){
     loopValveOn();
-    //loopMQTT("sensor/valve", "on");
-    delay(2000);
+    loopMQTT("sensor/valve", "on");
+    delay(10000);
     loopValveOff();
-    //loopMQTT("sensor/valve", "off");
+    loopMQTT("sensor/valve", "off");
     delay(2000);
   }
-  */
+
 
   // Display some log
   Serial.println("**********************************");

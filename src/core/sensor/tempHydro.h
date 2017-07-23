@@ -6,7 +6,7 @@
  * CONF FOR TEMP & HYDRO
  */
 #include "DHT.h"
-#define DHTPIN 2     // what digital pin we're connected to
+#define DHTPIN 5     // what digital pin we're connected to
 
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11   // DHT 11
@@ -73,7 +73,7 @@ float loopHydro(){
 float loopHeat(){
   float t = loopTemp();
   float h = loopHydro();
-  
+
   // Compute heat index in Fahrenheit (the default)
   //float hif = dht.computeHeatIndex(f, h);
   // Compute heat index in Celsius (isFahreheit = false)

@@ -3,7 +3,7 @@
 ***********************************************************************/
 
 // This is the output pin on the Arduino we are usin
-int solenoidPin = 4;
+int solenoidPin = 14;
 
 void setupValve(){
   //Sets the pin as an output
